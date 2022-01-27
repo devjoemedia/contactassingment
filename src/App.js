@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div style={{ width: "450px", margin: "auto" }} className="bg-light p-5">
-      <h3 className="text-muted">UserList App</h3>
+      <h3 className="text-muted">Contact List App</h3>
       <ContactsForm addContact={addContact} />
       <br />
       <h3 className="text-muted">Contact List</h3>
