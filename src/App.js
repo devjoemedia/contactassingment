@@ -1,26 +1,51 @@
 import React, { useState } from "react";
-import Contacts from "./components/Contacts";
+import ContactList from "./components/ContactList";
 import ContactsForm from "./components/ContactsForm";
+import { v4 as uuid } from "uuid";
 
 function App() {
   const [contacts, setContacts] = useState([
-    { name: "Nana Adjoa", phone: "0240000000", location: "East Legon" },
-    { name: "Tony Kroos", phone: "0245050500", location: "China" },
-    { name: "Jay West", phone: "0245550000", location: "Califonia" },
-    { name: "Jamil Codes", phone: "0246666666", location: "Canada" },
+    {
+      id: uuid(),
+      name: "Nana Adjoa",
+      phone: "0240000000",
+      location: "East Legon",
+    },
+    { id: uuid(), name: "Tony Kroos", phone: "0245050500", location: "China" },
   ]);
 
-  const addContact = (newUser) => {
-    setContacts([...contacts, newUser]);
+  const addContact = (newContact) => {
+    setContacts([...contacts, newContact]);
+  };
+
+  const editContact = (newContact) => {
+    const updatedContacts = contacts.map((contact) => {
+      if (newContact.id === contact.id) return newContact;
+      return contact;
+    });
+
+    setContacts(updatedContacts);
+  };
+
+  const deleteContact = (contactId) => {
+    const updatedContacts = contacts.filter(
+      (contact) => contact.id !== contactId
+    );
+
+    setContacts(updatedContacts);
   };
 
   return (
-    <div style={{ width: "450px", margin: "auto" }} className="bg-light p-5">
+    <div style={{ width: "550px", margin: "auto" }} className="bg-light p-5">
       <h3 className="text-muted">Contact List App</h3>
       <ContactsForm addContact={addContact} />
       <br />
       <h3 className="text-muted">Contact List</h3>
-      <Contacts contacts={contacts} />
+      <ContactList
+        contacts={contacts}
+        deleteContact={deleteContact}
+        editContact={editContact}
+      />
     </div>
   );
 }
