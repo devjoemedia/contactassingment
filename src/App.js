@@ -40,7 +40,7 @@ function App() {
       <h3 className="text-muted">Contact List App</h3>
       <ContactsForm addContact={addContact} />
       <br />
-      <h3 className="text-muted">Contact List</h3>
+      <h3 className="text-muted">({contacts.length}) Contact(s)</h3>
       <ContactList
         contacts={contacts}
         deleteContact={deleteContact}
