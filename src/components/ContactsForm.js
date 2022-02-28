@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addContact } from "../actions";
 import { v4 as uuid } from "uuid";
 
-const ContactsForm = ({ addContact }) => {
+const ContactsForm = () => {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState(0);
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newContact = { id: uuid(), name, location, phone };
-    addContact(newContact);
+
+    dispatch(addContact(newContact));
 
     setName("");
     setLocation("");
@@ -20,7 +25,7 @@ const ContactsForm = ({ addContact }) => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Name
           </label>
           <input
@@ -34,7 +39,7 @@ const ContactsForm = ({ addContact }) => {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Location
           </label>
           <input
@@ -47,7 +52,7 @@ const ContactsForm = ({ addContact }) => {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Phone Number
           </label>
           <input

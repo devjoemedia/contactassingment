@@ -1,26 +1,36 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { editContact, deleteContact } from "../actions";
 
-const Contact = ({ contact, editContact, deleteContact }) => {
+const Contact = ({ contact }) => {
   const [name, setName] = useState(contact.name);
   const [phone, setPhone] = useState(contact.phone);
   const [location, setLocation] = useState(contact.location);
   const [show, setShow] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleEdit = () => {
-    editContact({
+    const updatedContact = {
       id: contact.id,
       name,
       phone,
       location,
-    });
+    };
+
+    dispatch(editContact(updatedContact));
 
     setShow(false);
   };
 
+  const handleDelete = () => {
+    dispatch(deleteContact(contact.id));
+  };
+
   return (
     <div>
-      <div className="accordion-item">
+      <div className="accordion-item mb-2">
         <h2
           className="accordion-header"
           id={"panelsStayOpen-heading-" + contact.id}
@@ -54,11 +64,7 @@ const Contact = ({ contact, editContact, deleteContact }) => {
               <Button size="sm" onClick={() => setShow(true)}>
                 Edit
               </Button>
-              <Button
-                size="sm"
-                variant="danger"
-                onClick={() => deleteContact(contact.id)}
-              >
+              <Button size="sm" variant="danger" onClick={handleDelete}>
                 Delete
               </Button>
             </div>
@@ -73,7 +79,7 @@ const Contact = ({ contact, editContact, deleteContact }) => {
 
         <Modal.Body>
           <div className="mb-3">
-            <label for="exampleInputEmail1" className="form-label">
+            <label htmlFor="exampleInputEmail1" className="form-label">
               Name
             </label>
             <input
@@ -87,7 +93,7 @@ const Contact = ({ contact, editContact, deleteContact }) => {
             />
           </div>
           <div className="mb-3">
-            <label for="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Location
             </label>
             <input
@@ -100,7 +106,7 @@ const Contact = ({ contact, editContact, deleteContact }) => {
             />
           </div>
           <div className="mb-3">
-            <label for="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Phone Number
             </label>
             <input
