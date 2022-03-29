@@ -1,24 +1,16 @@
 import { v4 as uuid } from "uuid";
 
 const initialState = {
-  contacts: [
-    {
-      id: uuid(),
-      name: "Nana Adjoa",
-      phone: "0240000000",
-      location: "East Legon",
-    },
-    {
-      id: uuid(),
-      name: "Tony Kroos",
-      phone: "0245050500",
-      location: "China Town",
-    },
-  ],
+  contacts: [],
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case "SET_CONTACTS":
+      return {
+        ...state,
+        contacts: action.payload,
+      };
     case "ADD_CONTACT":
       return {
         ...state,

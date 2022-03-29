@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { editContact, deleteContact } from "../actions";
+import firebase from "../firebase/config";
 
 const Contact = ({ contact }) => {
   const [name, setName] = useState(contact.name);
   const [phone, setPhone] = useState(contact.phone);
   const [location, setLocation] = useState(contact.location);
   const [show, setShow] = useState(false);
-
-  const dispatch = useDispatch();
 
   const handleEdit = () => {
     const updatedContact = {
@@ -19,13 +16,25 @@ const Contact = ({ contact }) => {
       location,
     };
 
-    dispatch(editContact(updatedContact));
+    try {
+      firebase
+        .firestore()
+        .collection("contacts")
+        .doc(updatedContact.id)
+        .update(updatedContact);
+    } catch (err) {
+      console.log(err.messge);
+    }
 
     setShow(false);
   };
 
   const handleDelete = () => {
-    dispatch(deleteContact(contact.id));
+    try {
+      firebase.firestore().collection("contacts").doc(contact.id).delete();
+    } catch (err) {
+      console.log(err.messge);
+    }
   };
 
   return (

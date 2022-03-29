@@ -1,20 +1,25 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addContact } from "../actions";
 import { v4 as uuid } from "uuid";
+import firebase from "../firebase/config";
 
 const ContactsForm = () => {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState(0);
 
-  const dispatch = useDispatch();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const newContact = { id: uuid(), name, location, phone };
 
-    dispatch(addContact(newContact));
+    try {
+      firebase
+        .firestore()
+        .collection("contacts")
+        .doc(newContact.id)
+        .set(newContact);
+    } catch (err) {
+      console.log(err.messge);
+    }
 
     setName("");
     setLocation("");
