@@ -23,7 +23,7 @@ const Home = () => {
       <Button style={{ float: "right" }} onClick={handleLogOut}>
         Log out
       </Button>
-      <h4>{user.email}</h4>
+      <h4>welcome {user.email}</h4>
       <h3 className="text-muted">ContactList App</h3>
       <ContactsForm />
       <br />
