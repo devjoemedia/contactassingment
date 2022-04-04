@@ -7,12 +7,12 @@ const ContactsForm = () => {
   const [location, setLocation] = useState("");
   const [phone, setPhone] = useState(0);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newContact = { id: uuid(), name, location, phone };
 
     try {
-      firebase
+      await firebase
         .firestore()
         .collection("contacts")
         .doc(newContact.id)
@@ -30,13 +30,13 @@ const ContactsForm = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="name" className="form-label">
             Name
           </label>
           <input
             type="text"
             className="form-control"
-            id="exampleInputEmail1"
+            id="name"
             aria-describedby="emailHelp"
             placeholder="Enter you name"
             value={name}
@@ -44,26 +44,26 @@ const ContactsForm = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="loc" className="form-label">
             Location
           </label>
           <input
             type="text"
             className="form-control"
-            id="exampleInputPassword1"
+            id="loc"
             placeholder="Enter your location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="phone" className="form-label">
             Phone Number
           </label>
           <input
             type="number"
             className="form-control"
-            id="exampleInputPassword1"
+            id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />

@@ -1,12 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setContacts } from "./actions";
-import ContactList from "./components/ContactList";
-import ContactsForm from "./components/ContactsForm";
 import firebase from "./firebase/config";
+import Router from "./Router";
+import { setAuthUser } from "./actions/index";
 
 function App() {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) dispatch(setAuthUser(user));
+      else dispatch(setAuthUser(null));
+    });
+  });
 
   useEffect(() => {
     try {
@@ -25,14 +32,7 @@ function App() {
     }
   }, [dispatch]);
 
-  return (
-    <div style={{ width: "550px", margin: "auto" }} className="bg-light p-5">
-      <h3 className="text-muted">Contact List App</h3>
-      <ContactsForm />
-      <br />
-      <ContactList />
-    </div>
-  );
+  return <Router />;
 }
 
 export default App;

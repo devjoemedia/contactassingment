@@ -4,7 +4,7 @@ const initialState = {
   contacts: [],
 };
 
-export const reducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_CONTACTS":
       return {
@@ -40,3 +40,5 @@ export const reducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export default userReducer;

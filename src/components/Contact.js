@@ -8,7 +8,7 @@ const Contact = ({ contact }) => {
   const [location, setLocation] = useState(contact.location);
   const [show, setShow] = useState(false);
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     const updatedContact = {
       id: contact.id,
       name,
@@ -17,7 +17,7 @@ const Contact = ({ contact }) => {
     };
 
     try {
-      firebase
+      await firebase
         .firestore()
         .collection("contacts")
         .doc(updatedContact.id)
@@ -29,9 +29,13 @@ const Contact = ({ contact }) => {
     setShow(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-      firebase.firestore().collection("contacts").doc(contact.id).delete();
+      await firebase
+        .firestore()
+        .collection("contacts")
+        .doc(contact.id)
+        .delete();
     } catch (err) {
       console.log(err.messge);
     }

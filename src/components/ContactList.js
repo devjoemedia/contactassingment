@@ -3,7 +3,7 @@ import Contact from "./Contact";
 import { useSelector } from "react-redux";
 
 const Contacts = () => {
-  const contacts = useSelector((state) => state.contacts);
+  const contacts = useSelector((state) => state.contacts.contacts);
 
   return (
     <div>
